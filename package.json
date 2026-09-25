@@ -1,0 +1,24 @@
+{
+  "name": "surveysapi",
+  "version": "0.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "DiEmmal",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "tsx watch dist/app.js",
+    "build": "rimraf dist && tsc",
+    "dev": "tsx watch src/app.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.3",
+    "rimraf": "^6.1.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
