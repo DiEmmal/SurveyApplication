@@ -1,8 +1,7 @@
 import { ENVS } from './config/envs.js';
+import { AppRoutes } from './routes.js';
 import { Server } from './server.js';
 
 const server = new Server(ENVS.PORT);
 
-server.app.get('/', (req, res) => {
-    res.send('Hello to my Survey Application!');
-});
+server.setRoutes(AppRoutes.routes);

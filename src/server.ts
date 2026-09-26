@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 
 export class Server {
+
     public readonly app = express();
 
     constructor(port: number) {
@@ -9,4 +10,8 @@ export class Server {
         });
     };
 
-};
+    public setRoutes(routes: Router): void {
+        this.app.use(routes);
+    }
+
+}
