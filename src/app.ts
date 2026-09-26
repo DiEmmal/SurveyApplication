@@ -1,6 +1,6 @@
 import { ENVS } from './config/envs.js';
-import { AppRoutes } from './routes.js';
-import { Server } from './server.js';
+import { AppRoutes } from './domain/routes.js';
+import { Server } from './domain/server.js';
 
 const server = new Server(ENVS.PORT);
 

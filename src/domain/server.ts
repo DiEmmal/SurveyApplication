@@ -11,6 +11,10 @@ export class Server {
     };
 
     public setRoutes(routes: Router): void {
+        //* Middlewares
+        this.app.use(express.json()); // For parsing application/json
+        this.app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+
         this.app.use(routes);
     }
 
