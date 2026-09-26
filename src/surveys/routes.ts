@@ -8,9 +8,11 @@ export class SurveysRoutes {
         const router = Router();
 
         router.get("/", SurveyController.getSurveys);
+        router.get("/:id", SurveyController.getSurveyById);
+        router.get("/questions/:id", SurveyController.getSurveyQuestions);
         router.post("/create", SurveyController.createSurvey);
         router.post("/submit", SurveyController.submitSurvey);
-        
+
         return router;
 
     }
