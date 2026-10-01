@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { surveys } from "../../data/survey.mock.js";
+import { surveys } from "../../infrastructure/data/survey.mock.js";
 
 export class SurveyController {
 

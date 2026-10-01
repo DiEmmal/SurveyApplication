@@ -5,3 +5,5 @@ import { Server } from './presentation/server.js';
 const server = new Server(ENVS.PORT);
 
 server.setRoutes(AppRoutes.routes);
+
+server.start();

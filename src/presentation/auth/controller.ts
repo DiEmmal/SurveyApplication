@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { usersMock, type User } from "../../data/users.mock.js";
+import { usersMock, type User } from "../../infrastructure/data/users.mock.js";
 import { AuthService } from "../../services/auth.service.js";
 
 export class AuthController {
