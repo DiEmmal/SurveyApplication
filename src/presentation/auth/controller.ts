@@ -1,6 +1,10 @@
 import type { Request, Response } from "express";
-import { usersMock, type User } from "../../infrastructure/data/users.mock.js";
+
 import { AuthService } from "../../infrastructure/services/auth.service.js";
+import { usersMock } from "../../infrastructure/data/users.mock.js";
+import { UserEntity } from "../../domain/entities/user.entity.js";
+import { RegisterUserDto } from "../../domain/dtos/auth/register-user.dto.js";
+import { LoginUserDto } from "../../domain/dtos/auth/login-user.dto.js";
 
 export class AuthController {
 
@@ -10,12 +14,17 @@ export class AuthController {
 
     public login = (req: Request, res: Response) => {
         if (!req.body) return res.status(400).json({ message: "Request body is missing" });
+        
+        const { dto, error } = LoginUserDto.create(req.body);
+  
+        if (error) return res.status(400).json({ message: error });
 
-        const { email, password } = req.body;
+        const { email, password } = dto!;
 
         if (!email || !password) return res.status(400).json({ message: "Email and password are required" });
 
-        const user = usersMock.find(u => u.email === email && this.authService.comparePassword(password, u.password));
+        const user = usersMock.find(u => u.email === email && this.authService.comparePassword(password, u.passwordHash));
+
         if (!user) return res.status(401).json({ message: "Invalid email or password" });
 
         res.json({ message: `User logged in successfully, hello again ${user.name}` });
@@ -24,14 +33,18 @@ export class AuthController {
     public register = (req: Request, res: Response) => {
         if (!req.body) return res.status(400).json({ message: "Request body is missing" });
 
-        let { email, password, name } = req.body;
+        let { dto, error } = RegisterUserDto.create(req.body);
+
+        if (error) return res.status(400).json({ message: error });
+
+        const { email, password, name } = dto!;
 
         if (!email || !password || !name) return res.status(400).json({ message: "Email, password, and name are required" });
-        password = this.authService.hashPassword(password);
-        const newUser: User = { email, password, name, id: `${usersMock.length + 1}` };
+
+        const newUser = new UserEntity({ email, password: this.authService.hashPassword(password), name });
         usersMock.push(newUser);
 
-        res.json({ message: `User registered successfully, welcome ${newUser.name}`, user: newUser });
+        res.json({ message: `User registered successfully, welcome ${newUser.name}` });
     }
 
 }
