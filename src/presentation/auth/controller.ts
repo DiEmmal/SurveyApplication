@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { usersMock, type User } from "../../infrastructure/data/users.mock.js";
-import { AuthService } from "../../services/auth.service.js";
+import { AuthService } from "../../infrastructure/services/auth.service.js";
 
 export class AuthController {
 
@@ -28,7 +28,7 @@ export class AuthController {
 
         if (!email || !password || !name) return res.status(400).json({ message: "Email, password, and name are required" });
         password = this.authService.hashPassword(password);
-        const newUser: User = { email, password, name };
+        const newUser: User = { email, password, name, id: `${usersMock.length + 1}` };
         usersMock.push(newUser);
 
         res.json({ message: `User registered successfully, welcome ${newUser.name}`, user: newUser });

@@ -7,11 +7,12 @@ export class SurveysRoutes {
 
         const router = Router();
 
-        router.get("/", SurveyController.getSurveys);
-        router.get("/:id", SurveyController.getSurveyById);
-        router.get("/questions/:id", SurveyController.getSurveyQuestions);
-        router.post("/create", SurveyController.createSurvey);
-        router.post("/submit", SurveyController.submitSurvey);
+        const controller = new SurveyController();
+
+        router.get("/", controller.getSurveys);
+        router.get("/:id", controller.getSurveyById);
+        router.post("/create/:authorId", controller.createSurvey);
+        router.post("/submit/:id", controller.submitSurvey);
 
         return router;
 

@@ -1,4 +1,4 @@
-import { BcryptAdapter } from "../config/bcrypt.adapter.js";
+import { BcryptAdapter } from "../../config/bcrypt.adapter.js";
 
 export class AuthService {
 

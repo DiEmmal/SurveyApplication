@@ -3,15 +3,18 @@ export interface Survey {
     title: string;
     description: string;
     questions: Question[];
+    authorId: string;
 }
 
 export interface Question {
     id: string;
     text: string;
-    type: "text" | "multiple-choice" | "rating";
-    options: string[];
+    type: QuestionType;
+    options?: string[];
     correctAnswer?: string | string[];
 }
+
+export type QuestionType = "text" | "multiple-choice" | "rating";
 
 export const surveys: Survey[] = [
     {
@@ -25,7 +28,8 @@ export const surveys: Survey[] = [
                 type: "rating",
                 options: ["1", "2", "3", "4", "5"],
             }
-        ]
+        ],
+        authorId: "qwerty"
     },
     {
         id: "2",
@@ -38,7 +42,8 @@ export const surveys: Survey[] = [
                 type: "rating",
                 options: ["1", "2", "3", "4", "5"],
             }
-        ]
+        ],
+        authorId: "qwerty"  
     },
     {
         id: "3",
@@ -48,14 +53,12 @@ export const surveys: Survey[] = [
             {
                 id: "1",
                 text: "What do you like most about our product?",
-                type: "text",
-                options: [],
+                type: "text"
             },
             {
                 id: "2",
                 text: "What improvements would you suggest?",
-                type: "text",
-                options: [],
+                type: "text"
             },
             {
                 id: "3",
@@ -63,6 +66,7 @@ export const surveys: Survey[] = [
                 type: "multiple-choice",
                 options: ["Yes", "No"],
             }
-        ]
+        ],
+        authorId: "qwerty"
     },
 ];
