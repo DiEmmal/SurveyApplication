@@ -5,5 +5,5 @@ export const usersMock: UserEntity[] = [
         email: "email@example.com",
         password: "password123",
         name: "John Doe"
-    })
+    }),
 ]

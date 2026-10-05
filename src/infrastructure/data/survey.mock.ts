@@ -1,52 +1,8 @@
-export interface Survey {
-    id: string;
-    title: string;
-    description: string;
-    questions: Question[];
-    authorId: string;
-}
+import type { SurveyEntity, SurveyResponse } from "../../domain/entities/survey.entity.js";
 
-export interface Question {
-    id: string;
-    text: string;
-    type: QuestionType;
-    options?: string[];
-    correctAnswer?: string | string[];
-}
-
-export type QuestionType = "text" | "multiple-choice" | "rating";
-
-export const surveys: Survey[] = [
+export const surveys: SurveyEntity[] = [
     {
         id: "1",
-        title: "Customer Satisfaction Survey",
-        description: "A survey to measure customer satisfaction.",
-        questions: [
-            {
-                id: "1",
-                text: "How satisfied are you with our product?",
-                type: "rating",
-                options: ["1", "2", "3", "4", "5"],
-            }
-        ],
-        authorId: "qwerty"
-    },
-    {
-        id: "2",
-        title: "Employee Engagement Survey",
-        description: "A survey to assess employee engagement.",
-        questions: [
-            {
-                id: "1",
-                text: "How engaged do you feel at work?",
-                type: "rating",
-                options: ["1", "2", "3", "4", "5"],
-            }
-        ],
-        authorId: "qwerty"  
-    },
-    {
-        id: "3",
         title: "Product Feedback Survey",
         description: "A survey to gather feedback on our products.",
         questions: [
@@ -70,3 +26,5 @@ export const surveys: Survey[] = [
         authorId: "qwerty"
     },
 ];
+
+export const surveyResponses: SurveyResponse[] = []
