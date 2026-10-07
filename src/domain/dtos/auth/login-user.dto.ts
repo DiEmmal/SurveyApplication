@@ -12,9 +12,18 @@ export class LoginUserDto {
         }
 
         const { email, password } = props;
+
+        if(!email) return { error: "Email is required" };
+        if(!email.includes("@")) return { error: "Email must be valid" };
+        if(!password) return { error: "Password is required" };
+        if(password.length < 6) return { error: "Password must be at least 6 characters long" };
         
-        if (!email || !password) {
-            return { error: "Missing required fields" };
+        if (typeof email !== "string" || typeof password !== "string") {
+            return { error: "Email and password must be strings" };
+        }
+
+        if (email.trim() === "" || password.trim() === "") {
+            return { error: "Email and password cannot be empty" };
         }
 
         return { dto: new LoginUserDto(email, password) };
