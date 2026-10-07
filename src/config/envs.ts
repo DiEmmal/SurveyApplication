@@ -1,9 +1,10 @@
-process.loadEnvFile()
+import "dotenv/config";
+import env from "env-var";
 
 export const ENVS = {
-    PORT: process.env.PORT ? +process.env.PORT : 3001,
-    MONGO_PASS: process.env.MONGO_PASS,
-    MONGO_USER: process.env.MONGO_USER,
-    MONGO_URL: process.env.MONGO_URL,
-    MONGO_DB_NAME: process.env.MONGO_DB_NAME,
+    PORT: env.get("PORT").default("3001").asPortNumber(),
+    MONGO_PASS: env.get("MONGO_PASS").required().asString(),
+    MONGO_USER: env.get("MONGO_USER").required().asString(),
+    MONGO_URL: env.get("MONGO_URL").required().asString(),
+    MONGO_DB_NAME: env.get("MONGO_DB_NAME").required().asString(),
 };
