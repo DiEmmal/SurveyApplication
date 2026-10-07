@@ -60,4 +60,4 @@ Register request body:
 }
 ```
 
-Authentication currently uses the in-memory data from `src/data/users.mock.ts`. Users and passwords are not persisted in a database yet.
+The data is stored in a MongoDB database, and the password is hashed before being saved. The login endpoint checks the provided credentials against the stored data and returns a success message if they match.
