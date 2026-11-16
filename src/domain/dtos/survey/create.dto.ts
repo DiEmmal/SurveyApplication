@@ -1,4 +1,11 @@
-import { type Question } from "../../entities/survey.entity.js";
+import type { Question } from "../../entities/survey/types/Question.js";
+
+interface CreateSurveyDtoProps {
+    title: string;
+    description: string;
+    questions: Question[];
+    authorId: string;
+}
 
 export class CreateSurveyDto {
 
@@ -9,64 +16,47 @@ export class CreateSurveyDto {
         public readonly authorId: string
     ) { }
 
-    public static create(props: { title: string; description: string, questions: Question[], authorId: string }): { dto?: CreateSurveyDto, error?: string } {
+    public static create(props: CreateSurveyDtoProps): { dto?: CreateSurveyDto, error?: string } {
         if (!props) return { error: "Properties are required" };
 
         const { title, description, questions, authorId } = props;
 
-        if (
-            typeof title !== "string" ||
-            title.trim() === "" ||
-            typeof description !== "string" ||
-            description.trim() === "" ||
-            typeof authorId !== "string" ||
-            authorId.trim() === ""
-        ) {
-            return { error: "Required fields cannot be empty" };
+        if (typeof title !== "string" || typeof description !== "string" || typeof authorId !== "string") {
+            return { error: "Title, description, and author ID must be strings" };
         }
 
-        if (!title || !description || !questions || !authorId) return { error: "Missing required fields" };
+        if (!title || !description || !questions || !authorId) {
+            return { error: "Missing required fields" };
+        }
 
-        if (!Array.isArray(questions) || questions.length === 0) return { error: "Questions must be a non-empty array" };
+        if(title.trim() === "" || description.trim() === "") {
+            return { error: "Title and description cannot be empty" };
+        }
 
-        if (questions.length < 3) return { error: "A survey must have at least 3 questions" };
-
-        const validTypes = ["text", "multiple-choice", "rating"];
+        if(!Array.isArray(questions)) {
+            return { error: "Questions must be an array" };
+        }
 
         for (const question of questions) {
-
-            if (!question.id || !question.text || !question.type) return { error: "Each question must have an id, text, and type" };
-
-            if (question.text === '') return { error: "Question text cannot be empty" };
-
             if (
-                (question.type === "multiple-choice" || question.type === "rating") &&
-                (!Array.isArray(question.options) || question.options.length === 0)
+                !question ||
+                typeof question.id !== "string" ||
+                typeof question.questionHeader !== "string" ||
+                typeof question.type !== "string" ||
+                question.id.trim() === "" ||
+                question.questionHeader.trim() === "" ||
+                question.type.trim() === ""
             ) {
-                return { error: "This question type must have options" };
+                return { error: "Each question must have an id, questionHeader, and type" };
             }
+        }
 
-            if (
-                question.type === "text" &&
-                question.options !== undefined &&
-                question.options.length > 0
-            ) {
-                return { error: "Text questions should not have options" };
-            }
+        if (!authorId || authorId.trim() === "") {
+            return { error: "Author ID cannot be empty" };
+        }
 
-            if (!validTypes.includes(question.type)) {
-                return { error: "Invalid question type" };
-            }
-
-            if (question.options && question.options?.length > 0) {
-                if (question.options.length > 5) return { error: "A question can have a maximum of 5 options" };
-                for (const option of question.options) {
-                    if (typeof option !== "string" || option.trim() === "") {
-                        return { error: "Question options cannot be empty" };
-                    }
-                }
-            }
-
+        if (questions.length === 0) {
+            return { error: "Questions must be a non-empty array" };
         }
 
         return { dto: new CreateSurveyDto(title, description, questions, authorId) };

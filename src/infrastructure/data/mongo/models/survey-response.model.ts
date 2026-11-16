@@ -1,14 +1,23 @@
 import mongoose from "mongoose";
 
-const surveySchema = new mongoose.Schema({
+const surveyResponseSchema = new mongoose.Schema({
     surveyId: {
         type: String,
         required: true
     },
     answers: {
-        type: [Object],
+        type: [
+            {
+                questionId: { type: String, required: true },
+                value: { type: String, required: true }
+            }
+        ],
         required: true
+    },
+    submittedAt: {
+        type: Date,
+        default: Date.now
     }
 });
 
-export const SurveyResponseModel = mongoose.model("SurveyResponse", surveySchema);
+export const SurveyResponseModel = mongoose.model("SurveyResponse", surveyResponseSchema);

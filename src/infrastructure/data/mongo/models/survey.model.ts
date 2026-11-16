@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const surveySchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true,
+        unique: true
+    },
     title: {
         type: String,
         required: true
@@ -13,10 +18,8 @@ const surveySchema = new mongoose.Schema({
         type: [
             {
                 id: { type: String, required: true },
-                text: { type: String, required: true },
-                type: { type: String, required: true },
-                options: { type: [String], required: false },
-                correctAnswer: { type: [String], required: false }
+                questionHeader: { type: String, required: true },
+                type: { type: String, required: true, enum: ["text"] }
             }
         ],
         required: true
@@ -25,10 +28,9 @@ const surveySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    id: {
-        type: String,
-        required: true,
-        unique: true
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

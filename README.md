@@ -12,18 +12,18 @@ The API is served by default at `http://localhost:${ENVS.PORT}`.
 
 | Method | Endpoint                     | Description                                                |
 | ------ | ---------------------------- | ---------------------------------------------------------- |
-| `GET`  | `/api/surveys`               | Get all surveys.                                           |
-| `GET`  | `/api/surveys/:id`           | Get a survey by its ID.                                    |
-| `GET`  | `/api/surveys/questions/:id` | Get the questions for a survey.                            |
-| `POST` | `/api/surveys/create`        | Create a survey. Currently returns a placeholder response. |
-| `POST` | `/api/surveys/submit`        | Submit a survey. Currently returns a placeholder response. |
+| `GET`  | `/api/survey`                 | Get all surveys.                |
+| `GET`  | `/api/survey/:id`              | Get a survey by its ID.         |
+| `GET`  | `/api/survey/questions/:id`    | Get the questions for a survey. |
+| `POST` | `/api/survey/create/:authorId` | Create a survey.                |
+| `POST` | `/api/survey/submit/:id`       | Submit a survey.                |
 
 Examples:
 
 ```text
-GET /api/surveys
-GET /api/surveys/1
-GET /api/surveys/questions/1
+GET /api/survey
+GET /api/survey/1
+GET /api/survey/questions/1
 ```
 
 If a survey does not exist, the `GET` endpoints that receive an ID return:

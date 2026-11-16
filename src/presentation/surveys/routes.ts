@@ -10,6 +10,7 @@ export class SurveysRoutes {
         const controller = new SurveyController();
 
         router.get("/", controller.getSurveys);
+        router.get("/questions/:id", controller.getSurveyQuestions);
         router.get("/:id", controller.getSurveyById);
         router.post("/create/:authorId", controller.createSurvey);
         router.post("/submit/:id", controller.submitSurvey);

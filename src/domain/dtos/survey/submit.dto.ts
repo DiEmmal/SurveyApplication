@@ -1,4 +1,12 @@
-import type { Answer } from "../../entities/survey.entity.js";
+export interface Answer {
+    questionId: string;
+    value: string;
+}
+
+interface SubmitSurveyDtoProps {
+    surveyId: string;
+    answers: Answer[];
+}
 
 export class SubmitSurveyDto {
 
@@ -7,22 +15,32 @@ export class SubmitSurveyDto {
         public readonly answers: Answer[]
     ){}
 
-    public static create(props: { surveyId: string; answers: Answer[] }): { dto?: SubmitSurveyDto, error?: string } {
+    public static create(props: SubmitSurveyDtoProps): { dto?: SubmitSurveyDto, error?: string } {
 
         if(!props) return { error: "Properties are required" };
 
         const { surveyId, answers } = props;
 
-        if (!surveyId || !answers) {
+        if(!surveyId || !answers) {
             return { error: "Missing required fields" };
         }
 
-        if(!Array.isArray(answers) || answers.length === 0) {
+        if (typeof surveyId !== "string" || surveyId.trim() === "") {
+            return { error: "Invalid survey ID" };
+        }
+
+        if (!Array.isArray(answers) || answers.length === 0) {
             return { error: "Answers must be a non-empty array" };
         }
 
         for (const answer of answers) {
-            if (!answer.questionId || !answer.value) {
+            if (
+                !answer ||
+                typeof answer.questionId !== "string" ||
+                typeof answer.value !== "string" ||
+                answer.questionId.trim() === "" ||
+                answer.value.trim() === ""
+            ) {
                 return { error: "Each answer must have a questionId and value" };
             }
         }
